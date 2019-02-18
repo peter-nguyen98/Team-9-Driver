@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package connectfour;
+package ConnectFour;
 
 /**
  *
  * @author ryanvacca
  */
-public class board 
+public class Board 
 {
     private int row;
     private int column;
     private char[][] connectBoard;
     private int connectNumber;
 
-    board(int irow, int icolumn, int iconnectNumber)
+    Board(int irow, int icolumn, int iconnectNumber)
     {
         row = irow;
         column = icolumn;
@@ -149,9 +149,9 @@ public class board
                 if(counter == connectNumber)
                 {
                     return true;
-                }  
+                }
             }
-        }      
+        }
         return false;
     }
     
@@ -177,9 +177,9 @@ public class board
                 if(counter == connectNumber)
                 {
                     return true;
-                }  
+                }
             }
-        } 
+        }
         return false;
     }
     
@@ -205,9 +205,9 @@ public class board
                 if(counter == connectNumber)
                 {
                     return true;
-                }  
+                }
             }
-        } 
+        }
         return false;
     }
     

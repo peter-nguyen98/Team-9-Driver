@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package connectfour;
+package ConnectFour;
 
 /**
  *
  * @author ryanvacca
  */
-public class driver 
+public class Driver 
 {
-    driver()
+    Driver()
     {
-        board game1 = new board(7,8,4);
+        Board game1 = new Board(7,8,4);
         game1.loadBoardEmpty();
         
         //Row 1
@@ -23,8 +23,8 @@ public class driver
         game1.addMoveToBoard(2, 4);
         game1.addMoveToBoard(2, 5);
         game1.addMoveToBoard(2, 6);
-        game1.addMoveToBoard(2, 7); 
-        game1.addMoveToBoard(2, 8); 
+        game1.addMoveToBoard(2, 7);
+        game1.addMoveToBoard(2, 8);
         
         //Row 2
         game1.addMoveToBoard(2, 1);
@@ -33,7 +33,7 @@ public class driver
         game1.addMoveToBoard(2, 4);
         game1.addMoveToBoard(2, 5);
         game1.addMoveToBoard(2, 6);
-        game1.addMoveToBoard(2, 7); 
+        game1.addMoveToBoard(2, 7);
         game1.addMoveToBoard(2, 8);
         
         //Row 3
@@ -43,8 +43,8 @@ public class driver
         game1.addMoveToBoard(2, 4);
         game1.addMoveToBoard(2, 5);
         game1.addMoveToBoard(2, 6);
-        game1.addMoveToBoard(2, 7); 
-        game1.addMoveToBoard(2, 8); 
+        game1.addMoveToBoard(2, 7);
+        game1.addMoveToBoard(2, 8);
         
         //Row 4
         game1.addMoveToBoard(2, 1);
@@ -53,7 +53,7 @@ public class driver
         game1.addMoveToBoard(2, 4);
         game1.addMoveToBoard(2, 5);
         game1.addMoveToBoard(2, 6);
-        game1.addMoveToBoard(2, 7); 
+        game1.addMoveToBoard(2, 7);
         game1.addMoveToBoard(2, 8);
         
         //Row 5
@@ -63,8 +63,8 @@ public class driver
         game1.addMoveToBoard(2, 4);
         game1.addMoveToBoard(2, 5);
         game1.addMoveToBoard(2, 6);
-        game1.addMoveToBoard(2, 7); 
-        game1.addMoveToBoard(2, 8); 
+        game1.addMoveToBoard(2, 7);
+        game1.addMoveToBoard(2, 8);
         
         //Row 6
         game1.addMoveToBoard(2, 1);
@@ -73,7 +73,7 @@ public class driver
         game1.addMoveToBoard(2, 4);
         game1.addMoveToBoard(2, 5);
         game1.addMoveToBoard(2, 6);
-        game1.addMoveToBoard(2, 7); 
+        game1.addMoveToBoard(2, 7);
         game1.addMoveToBoard(2, 8);
         
         //Row 7
@@ -83,7 +83,7 @@ public class driver
         game1.addMoveToBoard(2, 4);
         game1.addMoveToBoard(2, 5);
         game1.addMoveToBoard(2, 6);
-        game1.addMoveToBoard(2, 7); 
+        game1.addMoveToBoard(2, 7);
         game1.addMoveToBoard(2, 8);
         
         
