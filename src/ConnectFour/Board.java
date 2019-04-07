@@ -13,7 +13,7 @@ public class Board
 {
     private int row;
     private int column;
-    private char[][] connectBoard;
+    public char[][] connectBoard;
     private int connectNumber;
 
     Board(int irow, int icolumn, int iconnectNumber)
