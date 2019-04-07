@@ -1,70 +1,59 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ConnectFour;
 
-public class Player 
-{
+public class Player  {
+
+    private static int nextId = 1;
+
+    final private int ID;
     private String name;
-    private int playerId;
     private int currentChoice;
     private boolean playerWin;
     
-    Player()
-    {
+    Player() {
         name = "";
-        playerId = -1;
+        ID = nextId++;
         currentChoice = -1;
         playerWin = false;
     }
     
-    Player(String iName, int iPlayerId, int iCurrentChoice, boolean iPlayerWin)
-    {
+    Player(String iName, int iCurrentChoice, boolean iPlayerWin) {
+ 
         name = iName;
-        playerId = iPlayerId;
+        ID = nextId++;
         currentChoice = iCurrentChoice;
         playerWin = iPlayerWin;
     }
     
-    public void setName(String iName)
-    {
+    public void setName(String iName) {
         name = iName;
     }
     
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setPlayerId(int iPlayerId)
-    {
-        playerId = iPlayerId;
+    public int getID() {
+        return ID;
     }
 
-    public int getPlayerId()
-    {
-        return playerId;
-    }
-
-    public void setCurrentChoice(int iCurrentChoice)
-    {
+    public void setCurrentChoice(int iCurrentChoice) {
+ 
         currentChoice = iCurrentChoice;
     }
 
-    public int getCurrentChoice()
-    {
+    public int getCurrentChoice() {
+ 
         return currentChoice;
     }
 
-    public void setPlayerWin(boolean iPlayerWin)
-    {
+    public void setPlayerWin(boolean iPlayerWin) {
+ 
         playerWin = iPlayerWin;
     }
 
-    public boolean getPlayerWin()
-    {
+    public boolean getPlayerWin() {
+ 
         return playerWin;
     }
 }
