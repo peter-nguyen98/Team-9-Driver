@@ -6,15 +6,14 @@ TODO: Update description later.
 ### Driver Requirements
 TODO: Define "driver" using requirements, or link to requirements doc
 
-### Building the Program
+### Building and Running the Program
 
-Running `make` will build the program.
-A `source-list` file will be created, and results are put into the build directory. 
+Right now, the process is as easy as:
+`gradle build`
+`gradle run`
 
-### Running the Program
-
-Running `make connect-4` will run the program.  
-TODO: Update later
+We will add some command line arguments later.
+I'm also looking into creating an executable jar file (currently doesn't work because of dependency issue I think)
 
 ### Examples
 
