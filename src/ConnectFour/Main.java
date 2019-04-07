@@ -3,8 +3,8 @@ package ConnectFour;
 
 import com.google.gson.Gson;
 
-public class Main 
-{
+// Rename to 'Driver'?
+public class Main {
 
     // Note: I'm not using the driver directly now because
     // the command line arguments are in main.
@@ -21,8 +21,7 @@ public class Main
     // passed as an argument to it. The program args will
     // always be used.
     // 
-    public static void main(String[] args)
-    { 
+    public static void main(String[] args) { 
         //ProcessBuilder pb = new ProcessBuilder(
         //    "connect-four-naive",
         //    "--player 1",
@@ -33,9 +32,14 @@ public class Main
         //Process p = pb.start();
         //p.getInputStream();
         
-        Board b = new Board(7,8,4);
-        b.loadBoardEmpty();
-        b.addMoveToBoard(2, 1);
+        final int height = 7;
+        final int width = 8;
+        
+        Board b = new Board(height, width, 4);
+        // Right now, addMoveToBoard only accepts players 1 and 2
+        final int player1 = 1;
+        final int player2 = 2;
+        b.addMoveToBoard(player2, 1);
 
         Gson gson = new Gson();
         String json = gson.toJson(b);

@@ -1,52 +1,42 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ConnectFour;
 
 /**
  *
  * @author ryanvacca
  */
-public class Board 
-{
+public class Board {
+
     private int row;
     private int column;
-    public char[][] connectBoard;
+    private char[][] grid;
     private int connectNumber;
 
-    Board(int irow, int icolumn, int iconnectNumber)
-    {
-        row = irow;
-        column = icolumn;
-        connectNumber = iconnectNumber;
-        connectBoard = new char[row][column];
+    Board(int row, int column, int connectNumber) {
+        this.row = row;
+        this.column = column;
+        this.connectNumber = connectNumber;
+        grid = new char[row][column];
+        loadBoardEmpty();
     }
 
-    public void loadBoardEmpty()
-    {
-        for(int rowIterator = 0; rowIterator < row; rowIterator++)
-        {
-            for(int columnIterator = 0; columnIterator < column; columnIterator++)
-            {
-                connectBoard[rowIterator][columnIterator] = '-';
+    private void loadBoardEmpty() {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                grid[i][j] = '-';
             }
         }
     }
     
     
-   
     /****  Check all rows for that specific column   ****/
     /****  Input: Integer value of Column to check   ****/
     /****  Output: Returns row number to populate or -1 if entire column is full   ****/
-    public int determineRow(int columnAdd)
-    {
-        for(int rowIterator = 0; rowIterator < row; rowIterator++)
-        {
-            if(connectBoard[rowIterator][columnAdd] == '-')
-            {
-                return rowIterator;
+    public int determineRow(int column) {
+ 
+        for (int i = 0; i < row; i++) {
+            if (grid[i][column] == '-') {
+                return i;
             }
         }
         return -1;
@@ -54,72 +44,58 @@ public class Board
     
     /****  Add Players move to Game Board
      * @param player
-     * @param columnAdd ****/
-    public void addMoveToBoard(int player, int columnAdd)
-    {
-        char playerSymbol;
-        if(player == 1)
-        {
-            playerSymbol = 'X';
-        }
-        else
-        {
-            playerSymbol = 'O';
-        }
-        int addRow = determineRow(columnAdd - 1);
-        if(addRow != -1)
-        {
-            connectBoard[addRow][columnAdd - 1] = playerSymbol;
+     * @param column ****/
+    public void addMoveToBoard(int player, int column) {
+ 
+        char symbol = (player == 1) ? 'X' : 'O';
+        int add = determineRow(column - 1);
+        if (add != -1) {
+            grid[add][column - 1] = symbol;
         }
     }
-                
-    public void printBoard()
-    {
+    
+    public void printBoard() {
+ 
         System.out.print("            Player Board");
         System.out.print('\n');
         System.out.print("-------------------------------------");
         System.out.print('\n');
-        for(int rowIterator = row; rowIterator > 0; rowIterator--)
-        {
-            for(int columnIterator = 0; columnIterator < column ; columnIterator++)
-            {
-                System.out.print(connectBoard[(rowIterator - 1)][(columnIterator)]);
+        for (int i = row; i > 0; i--) {
+            for (int j = 0; j < column ; j++) {
+                System.out.print(grid[(i - 1)][(j)]);
                 System.out.print("    ");
             }
             System.out.println('\n');
         }
         System.out.print("-------------------------------------");
         System.out.print('\n');
-        for(int columnIterator = 0; columnIterator < column; columnIterator++)
-        {
-            System.out.print(columnIterator + 1);
+        for (int j = 0; j < column; j++) {
+ 
+            System.out.print(j + 1);
             System.out.print("    ");
         }
         System.out.print('\n');
         System.out.print('\n');
     }
     
-    public boolean checkUpDown(char whichPlayer)
-    {   
-        int fromRow = (connectNumber - 1); //3
-        int toRow = (row - 1); //6
-        int fromColumn = 0; //0
-        int toColumn = (column - 1); //7
+    public boolean checkVerticalWin(char whichPlayer) {
+    
+        int fromRow = (connectNumber - 1); // 3
+        int toRow = (row - 1);             // 6
+        int fromColumn = 0;                // 0
+        int toColumn = (column - 1);       // 7
         
-        for(int i = fromRow; i <= toRow; i++)
-        {
-            for(int j = fromColumn; j <= toColumn; j++)
-            {
+        for (int i = fromRow; i <= toRow; i++) {
+ 
+            for (int j = fromColumn; j <= toColumn; j++) {
+ 
                 int counter = 0;
-                for(int k = 0; k < connectNumber; k++)
-                {
-                    if(connectBoard[i-k][j] == whichPlayer)
-                    {
+                for (int k = 0; k < connectNumber; k++) {
+                    if (grid[i-k][j] == whichPlayer) {
                         counter++;
                     }
                 }
-                if(counter == connectNumber)
-                {
+                if (counter == connectNumber) {
                     return true;
                 }
             }
@@ -127,27 +103,24 @@ public class Board
         return false;
     }
     
-    public boolean checkLeftRight(char whichPlayer)
-    {
-        int fromRow = 0; //0
-        int toRow = (row - 1); //6
-        int fromColumn = 0; //0
-        int toColumn = (column - connectNumber); //4
+    public boolean checkHorizontalWin(char whichPlayer) {
+ 
+        int fromRow = 0;                         // 0
+        int toRow = (row - 1);                   // 6
+        int fromColumn = 0;                      // 0
+        int toColumn = (column - connectNumber); // 4
         
-        for(int i = fromRow; i <= toRow; i++)
-        {
-            for(int j = fromColumn; j <= toColumn; j++)
-            {
+        for (int i = fromRow; i <= toRow; i++) {
+ 
+            for (int j = fromColumn; j <= toColumn; j++) {
+ 
                 int counter = 0;
-                for(int k = 0; k <connectNumber; k++)
-                {
-                    if(connectBoard[i][j+k] == whichPlayer)
-                    {
+                for (int k = 0; k < connectNumber; k++) {
+                    if (grid[i][j + k] == whichPlayer) {
                         counter++;
                     }
                 }
-                if(counter == connectNumber)
-                {
+                if (counter == connectNumber) {
                     return true;
                 }
             }
@@ -155,27 +128,24 @@ public class Board
         return false;
     }
     
-    public boolean checkDiagnolLeft(char whichPlayer)
-    {
-        int fromRow = (connectNumber - 1); //3
-        int toRow = (row - 1); //6
-        int fromColumn = (connectNumber - 1); //3
-        int toColumn = (column - 1); //7
+    public boolean checkDiagnolLeftWin(char whichPlayer) {
+ 
+        int fromRow = (connectNumber - 1);    // 3
+        int toRow = (row - 1);                // 6
+        int fromColumn = (connectNumber - 1); // 3
+        int toColumn = (column - 1);          // 7
         
-        for(int i = fromRow; i <= toRow; i++)
-        {
-            for(int j = fromColumn; j <= toColumn; j++)
-            {
+        for (int i = fromRow; i <= toRow; i++) {
+ 
+            for (int j = fromColumn; j <= toColumn; j++) {
+ 
                 int counter = 0;
-                for(int k = 0; k < connectNumber; k++)
-                {
-                    if(connectBoard[i - k][j - k] == whichPlayer)
-                    {
+                for (int k = 0; k < connectNumber; k++) {
+                    if (grid[i - k][j - k] == whichPlayer) {
                         counter++;
                     }
                 }
-                if(counter == connectNumber)
-                {
+                if (counter == connectNumber) {
                     return true;
                 }
             }
@@ -183,27 +153,24 @@ public class Board
         return false;
     }
     
-    public boolean checkDiagnolRight(char whichPlayer)
-    {
-        int fromRow = (connectNumber - 1); //3
-        int toRow = (row - 1); //6
-        int fromColumn = 0; //0
-        int toColumn = (column - connectNumber); //4
+    public boolean checkDiagnolRightWin(char whichPlayer) {
+ 
+        int fromRow = (connectNumber - 1);       // 3
+        int toRow = (row - 1);                   // 6
+        int fromColumn = 0;                      // 0
+        int toColumn = (column - connectNumber); // 4
         
-        for(int i = fromRow; i <= toRow; i++)
-        {
-            for(int j = fromColumn; j <= toColumn; j++)
-            {
+        for (int i = fromRow; i <= toRow; i++) {
+ 
+            for (int j = fromColumn; j <= toColumn; j++) {
+ 
                 int counter = 0;
-                for(int k = 0; k < connectNumber; k++)
-                {
-                    if(connectBoard[i - k][j + k] == whichPlayer)
-                    {
+                for (int k = 0; k < connectNumber; k++) {
+                    if (grid[i - k][j + k] == whichPlayer) {
                         counter++;
                     }
                 }
-                if(counter == connectNumber)
-                {
+                if (counter == connectNumber) {
                     return true;
                 }
             }
@@ -211,14 +178,13 @@ public class Board
         return false;
     }
     
-    public boolean checkAll(char whichPlayer)
-    {
-        if(checkUpDown(whichPlayer) || checkLeftRight(whichPlayer) || checkDiagnolLeft(whichPlayer) || checkDiagnolRight(whichPlayer))
-        {
-            return true;
-        }
-        
-        return false;
-    }
+    public boolean playerWon(char player) {
+        return (
+            checkVerticalWin(player)    ||
+            checkHorizontalWin(player)  ||
+            checkDiagnolLeftWin(player) ||
+            checkDiagnolRightWin(player)
+        );
+    } 
     
-}//Class
+}
