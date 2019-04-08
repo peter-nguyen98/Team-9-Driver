@@ -46,3 +46,7 @@ The examples directory has its own `README` for more details.
         └── connect-four-scoring.rkt  
 ```
 Note: The file hierarchy may not be updated with every change and that's ok. It should be updated before submitting though.
+
+### Misc
+
+[JavaDoc Reference](https://www.oracle.com/technetwork/java/javase/documentation/index-137868.html)

@@ -1,13 +1,19 @@
 
 package ConnectFour;
 
-import com.google.gson.Gson;
+import java.util.List;
+import java.util.Arrays;
+import java.io.File;
+import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
 
+// API:
+// {"grid": [[0, 0, 0], [0, 0, 0], [0, 0, 0]]}
+// {"move":2}
+         
 // Rename to 'Driver'?
 public class Main {
-
-    // Note: I'm not using the driver directly now because
-    // the command line arguments are in main.
+    
     //
     // --interpreter-1 <path>
     // --program-1 <path>
@@ -22,36 +28,65 @@ public class Main {
     // always be used.
     // 
     public static void main(String[] args) { 
-        //ProcessBuilder pb = new ProcessBuilder(
-        //    "connect-four-naive",
-        //    "--player 1",
-        //    "--width 10",
-        //    "--height 10");
-        //
-        //pb.directory(new File("../examples"));
-        //Process p = pb.start();
-        //p.getInputStream();
         
+        // Get these from command line arguments instead?
         final int height = 7;
         final int width = 8;
         
-        Board b = new Board(height, width, 4);
-        // Right now, addMoveToBoard only accepts players 1 and 2
-        final int player1 = 1;
-        final int player2 = 2;
-        b.addMoveToBoard(player2, 1);
+        Board board = new Board(height, width, 4);
+        PlayerProcess p1;
+        PlayerProcess p2;
 
-        Gson gson = new Gson();
-        String json = gson.toJson(b);
-        System.out.println(json);
-
-        //{"row":7,"column":8,"connectBoard":[["O","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"],["-","-","-","-","-","-","-","-"]],"connectNumber":4}
+        ProcessBuilder pb = new ProcessBuilder()
+            .redirectError(Redirect.INHERIT)
+            .directory(new File("src/examples"));
         
-        // Desired output:
-        //{"grid": [[0, 0, 0], [0, 0, 0], [0, 0, 0]]}
-        //{"move":2}
+        List<String> cmd1 = Arrays.asList(
+            "./connect-four-naive",
+            "--player", "1",
+            "--height", Integer.toString(height),
+            "--width", Integer.toString(width)
+        );
+        
+        List<String> cmd2 = Arrays.asList(
+            //"julia",
+            //"connect-four-naive.jl",
+            "./connect-four-scoring",
+            "--player", "2",
+            "--height", Integer.toString(height),
+            "--width", Integer.toString(width)
+        );
+        
+        try {
+            
+            p1 = new PlayerProcess(pb.command(cmd1).start());
+            p2 = new PlayerProcess(pb.command(cmd1).start());
+            
+            int winner;
+            while (true) {
+                p1.sendGrid(board); 
+                board.addPlayerMove(1, p1.getMove());
+                if (board.playerWon(1)) {
+                    winner = 1;
+                    break;
+                }
 
-        // IMO This file is the driver, it is redundant to call the driver
-        //Driver driver = new Driver();
+                p2.sendGrid(board);
+                board.addPlayerMove(2, p2.getMove());
+                if (board.playerWon(2)) {
+                    winner = 2;
+                    break;
+                }
+            }
+
+            System.out.printf("The winner is %d\n", winner);
+            
+            p1.close();
+            p2.close();
+            
+        } catch (IOException e) {
+            System.out.println(e);
+            return;
+        } 
     }
 }

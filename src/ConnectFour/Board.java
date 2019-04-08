@@ -1,59 +1,93 @@
 
 package ConnectFour;
 
-/**
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+
+/** 
+ * Serializable board to JSON.
  *
- * @author ryanvacca
+ * The board class manages the state of a grid. The grid is a double
+ * array of integers, and an instance of this class may be serialized
+ * to json. <br>
+ *
+ * Currently, the json returned is: <br>
+ * <pre>
+ *  {                               
+ *      "grid": TODO -- fill this in
+ *  }
+ * </pre>
  */
 public class Board {
 
+    /**
+     * I believe more fields should be exposed, if not all.
+     * However, for flexibility all fields must explicitly be
+     * exposed and I won't include the row, column, or connect
+     * number because the starting naive implementations do not
+     * use these parts -- making me unsure if these are a part
+     * of the API. The row and column may need to be renamed to
+     * height and width. I can use 'SerializedName', a Gson
+     * annotation to do that.
+     * */ 
+    private static final Gson jsonConverter = new GsonBuilder().
+        excludeFieldsWithoutExposeAnnotation().create();
+
     private int row;
     private int column;
-    private char[][] grid;
+
+    @Expose
+    private int[][] grid;
+
     private int connectNumber;
 
+    /** Constructor
+     * */
     Board(int row, int column, int connectNumber) {
         this.row = row;
         this.column = column;
         this.connectNumber = connectNumber;
-        grid = new char[row][column];
+        grid = new int[row][column];
         loadBoardEmpty();
     }
 
     private void loadBoardEmpty() {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
-                grid[i][j] = '-';
+                grid[i][j] = 0;
             }
         }
     }
-    
-    
-    /****  Check all rows for that specific column   ****/
-    /****  Input: Integer value of Column to check   ****/
-    /****  Output: Returns row number to populate or -1 if entire column is full   ****/
-    public int determineRow(int column) {
+
+    /* Check all rows for that specific column 
+     * parameter column - the column to check 
+     * returns the row number to populate or -1 if the column is full
+     * */
+    private int determineRow(int column) {
  
         for (int i = 0; i < row; i++) {
-            if (grid[i][column] == '-') {
+            if (grid[i][column] == 0) {
                 return i;
             }
         }
         return -1;
     }
     
-    /****  Add Players move to Game Board
-     * @param player
-     * @param column ****/
-    public void addMoveToBoard(int player, int column) {
+    /** Add Player's move to Game Board
+     * @param player should only be 1 or 0. No checks are performed.
+     * @param column the column to drop the token into.
+     * */
+    public void addPlayerMove(int player, int column) {
  
-        char symbol = (player == 1) ? 'X' : 'O';
         int add = determineRow(column - 1);
         if (add != -1) {
-            grid[add][column - 1] = symbol;
+            grid[add][column - 1] = player;
         }
     }
     
+    /** Useful for debugging
+     * */
     public void printBoard() {
  
         System.out.print("            Player Board");
@@ -70,7 +104,6 @@ public class Board {
         System.out.print("-------------------------------------");
         System.out.print('\n');
         for (int j = 0; j < column; j++) {
- 
             System.out.print(j + 1);
             System.out.print("    ");
         }
@@ -78,7 +111,7 @@ public class Board {
         System.out.print('\n');
     }
     
-    public boolean checkVerticalWin(char whichPlayer) {
+    private boolean checkVerticalWin(int whichPlayer) {
     
         int fromRow = (connectNumber - 1); // 3
         int toRow = (row - 1);             // 6
@@ -103,7 +136,7 @@ public class Board {
         return false;
     }
     
-    public boolean checkHorizontalWin(char whichPlayer) {
+    private boolean checkHorizontalWin(int whichPlayer) {
  
         int fromRow = 0;                         // 0
         int toRow = (row - 1);                   // 6
@@ -128,7 +161,7 @@ public class Board {
         return false;
     }
     
-    public boolean checkDiagnolLeftWin(char whichPlayer) {
+    private boolean checkDiagnolLeftWin(int whichPlayer) {
  
         int fromRow = (connectNumber - 1);    // 3
         int toRow = (row - 1);                // 6
@@ -153,7 +186,7 @@ public class Board {
         return false;
     }
     
-    public boolean checkDiagnolRightWin(char whichPlayer) {
+    private boolean checkDiagnolRightWin(int whichPlayer) {
  
         int fromRow = (connectNumber - 1);       // 3
         int toRow = (row - 1);                   // 6
@@ -177,8 +210,17 @@ public class Board {
         }
         return false;
     }
+
+    public String toString() {
+        return jsonConverter.toJson(this);    
+    }
     
-    public boolean playerWon(char player) {
+    /** Determines if a player has won the game
+     * @param player check to see if this player has won 
+     * @return whether or not the player has connected the minimum 
+     * number of their pieces.
+     * */
+    public boolean playerWon(int player) {
         return (
             checkVerticalWin(player)    ||
             checkHorizontalWin(player)  ||
