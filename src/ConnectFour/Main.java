@@ -42,7 +42,9 @@ public class Main {
             .directory(new File("src/examples"));
         
         List<String> cmd1 = Arrays.asList(
-            "./connect-four-naive",
+            //"./connect-four-naive",
+			//"C:/Racket/Racket.exe",
+			//"C:/SCHOOL FILES/CSCI 3508 (Intro to Software Engineering)/Team-9-Driver/Team-9-Driver/src/examples/connect-four-naive.rkt",
             "--player", "1",
             "--height", Integer.toString(height),
             "--width", Integer.toString(width)
@@ -51,7 +53,9 @@ public class Main {
         List<String> cmd2 = Arrays.asList(
             //"julia",
             //"connect-four-naive.jl",
-            "./connect-four-scoring",
+			//"C:/Racket/Racket.exe",
+			//"C:/SCHOOL FILES/CSCI 3508 (Intro to Software Engineering)/Team-9-Driver/Team-9-Driver/src/examples/connect-four-naive.rkt",
+            //"./connect-four-scoring",
             "--player", "2",
             "--height", Integer.toString(height),
             "--width", Integer.toString(width)
@@ -71,7 +75,7 @@ public class Main {
                     break;
                 }
 
-                p2.sendGrid(board);
+                p2.sendGrid(board);				
                 board.addPlayerMove(2, p2.getMove());
                 if (board.playerWon(2)) {
                     winner = 2;
