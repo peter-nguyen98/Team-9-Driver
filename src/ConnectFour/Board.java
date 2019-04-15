@@ -80,9 +80,9 @@ public class Board {
      * */
     public void addPlayerMove(int player, int column) {
  
-        int add = determineRow(column - 1);
+        int add = determineRow(column);
         if (add != -1) {
-            grid[add][column - 1] = player;
+            grid[add][column] = player;
         }
     }
     
