@@ -34,7 +34,9 @@ public class Main {
         int height = 5;
         int width = 10;
         int tGames = 1;
-        
+        int playerOneW = 0;
+        int playerTwoW = 0;
+
         String arg_i1 = "";
         String arg_p1 = "";
         String arg_i2 = "";
@@ -132,6 +134,7 @@ public class Main {
                     board.addPlayerMove(1, p1.getMove());
                     if (board.playerWon(1)) {
                         winner = 1;
+                        ++playerOneW;
                         break;
                     }
 
@@ -139,6 +142,7 @@ public class Main {
                     board.addPlayerMove(2, p2.getMove());
                     if (board.playerWon(2)) {
                         winner = 2;
+                        ++playerTwoW;
                         break;
                     }
                 }
@@ -152,5 +156,9 @@ public class Main {
                 return;
             }
         }
+
+        System.out.println("A total of " + tGames + " were played.");
+        System.out.println("The playerOne won " + playerOneW + " times.");
+        System.out.println("The playerTwo won " + playerTwoW + " times.");
     }
 }
